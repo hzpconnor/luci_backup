@@ -1,0 +1,10 @@
+
+config vnstat
+	list interface 'wan1'
+	list interface 'wan2'
+	list interface 'eth3'
+	list interface 'wan2'
+	list interface 'eth1'
+	list interface '@wan1'
+	list interface '@wan1'
+

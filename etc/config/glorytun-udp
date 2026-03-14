@@ -1,0 +1,16 @@
+
+config glorytun-udp 'vpn'
+	option enable '0'
+	option host '120.25.222.197'
+	option port '65001'
+	option dev 'tun0'
+	option chacha '1'
+	option localip '10.255.254.2'
+	option remoteip '10.255.254.1'
+	option mode 'to'
+	option kxtimeout '7d'
+	option timetolerance '10m'
+	option keepalive '25s'
+	option rateauto '0'
+	option key 'C04B602CA69B6C05CFF8A0AC954BA85EE0CEB81F8DCE5C30CB27D2B44CF9355F'
+

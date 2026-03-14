@@ -1,0 +1,89 @@
+
+config interface 'all'
+
+config proto 'm6replay'
+	list url 'm6web.fr'
+	list url '6play.fr'
+	list url '6cloud.fr'
+
+config proto 'mycanal'
+	list url 'mycanal.fr'
+	list url 'canal-plus.com'
+	list url 'canalplus.com'
+	list url 'canalplus-cdn.net'
+	list url 'canalplus.pro'
+	list url 'canal-plus.net'
+
+config proto 'minecraft'
+	list url 'authserver.mojang.com'
+
+config proto 'lesnumeriques'
+	list url 'lesnumeriques.com'
+	list url 'botscorner.com'
+	list url 'app.botscorner.com'
+
+config proto 'disneyplus'
+	list url 'bamgrid.com'
+	list url 'disney-plus.net'
+
+config proto 'amazonvideo'
+	list url 'cloudfront.net'
+	list url 'llnw.net'
+
+config proto 'free'
+	list url 'free.fr'
+	list url 'freebox.fr'
+	list url 'oqee.tv'
+	list url 'oqee.net'
+	list url 'proxad.net'
+
+config proto 'orange'
+	list url 'orange.fr'
+	list url 'sosh.fr'
+	list url 'liveperson.net'
+	list url 'liveperson.com'
+	list url 'lpsn.net'
+	list url 'lpsnmedia.net'
+	list url 'francetelecom.fr'
+
+config proto 'sky'
+	list url 'sky.com'
+	list url 'skycdp.com'
+	list url 'skyanywhere.com'
+	list url 'epgsky.com'
+	list url 'skycdn.it'
+
+config proto 'captive_portal'
+	list url 'captive.apple.com'
+	list url 'connectivitycheck.gstatic.com'
+	list url 'clients3.google.com'
+	list url 'www.msftconnecttest.com'
+	list url 'www.msftncsi.com'
+	list url 'nmcheck.gnome.org'
+	list url 'networkcheck.kde.org'
+
+config interface 'eth0'
+	option id '9999'
+
+config interface 'wan1'
+	option id '5'
+
+config interface 'wan2'
+	option id '6'
+
+config interface 'tun0'
+	option id '1500'
+
+config global 'global'
+	option vpn_ipv4_md5 '68b329da9893e34099c7d8ad5cb9c940'
+	option vpn_ipv6_md5 '68b329da9893e34099c7d8ad5cb9c940'
+
+config interface 'eth1'
+	option id '3'
+
+config interface 'eth2'
+	option id '7'
+
+config interface 'eth3'
+	option id '8'
+

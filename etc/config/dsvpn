@@ -1,0 +1,11 @@
+
+config dsvpn 'vpn'
+	option dev 'tun0'
+	option port '65401'
+	option localip '10.255.251.2'
+	option remoteip '10.255.251.1'
+	option mode 'client'
+	option enable '0'
+	option host '120.25.222.197'
+	option key '04CB67DA8EE642F607CECA6B41A4682355B225EDE3780233AA90DA7A86E46C52'
+

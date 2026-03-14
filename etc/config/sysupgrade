@@ -1,0 +1,9 @@
+
+config server 'server'
+	option url 'https://download.openmptcprouter.com'
+
+config client 'client'
+	option upgrade_packages '0'
+	option auto_search '0'
+	option advanced_mode '0'
+

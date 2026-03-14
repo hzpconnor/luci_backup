@@ -1,0 +1,18 @@
+
+config glorytun 'vpn'
+	option enable '0'
+	option host '120.25.222.197'
+	option port '65001'
+	option dev 'tun0'
+	option mptcp '1'
+	option proto 'tcp'
+	option chacha20 '1'
+	option mtuauto '1'
+	option localip '10.255.255.2'
+	option remoteip '10.255.255.1'
+	option multiqueue '1'
+	option cpu_affinity '1'
+	option label 'Default VPN'
+	option timeout '10000'
+	option key 'C04B602CA69B6C05CFF8A0AC954BA85EE0CEB81F8DCE5C30CB27D2B44CF9355F'
+

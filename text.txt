@@ -1,0 +1,10 @@
+PS D:\test\test7> tar -xzf luci_backup.tar.gz
+www/cgi-bin/cgi-backup: Can't create '\\\\?\\D:\\test\\test7\\www\\cgi-bin\\cgi-backup': Invalid argument
+www/cgi-bin/cgi-download: Can't create '\\\\?\\D:\\test\\test7\\www\\cgi-bin\\cgi-download': Invalid argument
+www/cgi-bin/cgi-exec: Can't create '\\\\?\\D:\\test\\test7\\www\\cgi-bin\\cgi-exec': Invalid argument
+www/cgi-bin/cgi-upload: Can't create '\\\\?\\D:\\test\\test7\\www\\cgi-bin\\cgi-upload': Invalid argument
+www/luci-static/bootstrap-dark: Can't create '\\\\?\\D:\\test\\test7\\www\\luci-static\\bootstrap-dark': Invalid argument
+www/luci-static/bootstrap-light: Can't create '\\\\?\\D:\\test\\test7\\www\\luci-static\\bootstrap-light': Invalid argument
+usr/share/ucode/luci/template/themes/bootstrap-dark: Can't create '\\\\?\\D:\\test\\test7\\usr\\share\\ucode\\luci\\template\\themes\\bootstrap-dark': Invalid argument
+usr/share/ucode/luci/template/themes/bootstrap-light: Can't create '\\\\?\\D:\\test\\test7\\usr\\share\\ucode\\luci\\template\\themes\\bootstrap-light': Invalid argument
+tar.exe: Error exit delayed from previous errors.
