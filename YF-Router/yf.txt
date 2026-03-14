@@ -5,9 +5,13 @@ logo文本由 OpenMPTCProuter
 更换为
 YF-Router
 
-Powered by openmptcprouter v0.63-6.12 r0+30806-070d8eb4d5
+底部 Powered by openmptcprouter v0.63-6.12 r0+30806-070d8eb4d5
 更换为
 Powered by YF-Router v1.1
+对应链接由
+https://github.com/ysurac/openmptcprouter
+更换为
+https://yf-router.com
 
 登录成功后跳转页
 由

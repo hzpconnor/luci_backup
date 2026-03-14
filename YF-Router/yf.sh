@@ -44,22 +44,32 @@ fi
 # 3. 底部信息由 Powered by ... 更换为 Powered by YF-Router v1.1
 FOOTER_HTM="/usr/lib/lua/luci/view/themes/openmptcprouter/footer.htm"
 if [ -f "$FOOTER_HTM" ]; then
-    # 替换源码中带超链接或不带超链接的标识文本
-    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by <%= ver.distversion %></a>|Powered by YF-Router v1.1|g' "$FOOTER_HTM"
+    # 替换源码中带超链接或不带超链接的标识文本及目标网址
+    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by <%= ver.distversion %></a>|<a href="https://yf-router.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_HTM"
     sed -i 's/Powered by <%= ver.distversion %>/Powered by YF-Router v1.1/g' "$FOOTER_HTM"
-    echo "[✓] 底部信息已更改为 Powered by YF-Router v1.1"
+    echo "[✓] 底部信息及链接已更改为 Powered by YF-Router v1.1"
 else
     echo "[!] 警告: 找不到 ${FOOTER_HTM}"
 fi
 
-# 4. 登录成功后跳转页由 /cgi-bin/luci/ 更换为 /cgi-bin/luci/admin/system/openmptcprouter
+# 4. 登录成功后跳转页改到 OpenMPTCProuter 或系统自定页面
 INDEX_HTML="/www/index.html"
 if [ -f "$INDEX_HTML" ]; then
     sed -i 's|URL=cgi-bin/luci/|URL=/cgi-bin/luci/admin/system/openmptcprouter|g' "$INDEX_HTML"
     sed -i 's|href="cgi-bin/luci/"|href="/cgi-bin/luci/admin/system/openmptcprouter"|g' "$INDEX_HTML"
-    echo "[✓] 根目录的登录跳转重定向已更新"
+    echo "[✓] 根目录的网页重定向已更新"
 else
     echo "[!] 警告: 找不到 ${INDEX_HTML}"
+fi
+
+# 另外，要改变LuCI框架内登录(sysauth)成功后的默认跳转逻辑：
+# LuCI 自动路由判定 admin 节点的首选子节点。原逻辑没有指定 preferred 参数，默认进入第一个节点（通常是 status/overview）。
+# 我们在 luci-base.json 的 admin 节点下加入 "preferred": "system/openmptcprouter" (或你修改后的菜单名)。
+LUCI_BASE_JSON="/usr/share/luci/menu.d/luci-base.json"
+if [ -f "$LUCI_BASE_JSON" ]; then
+    # 由于是JSON格式，匹配 action 里的 recurse 并在上方插入 preferred 选项。
+    sed -i 's/"recurse": true/"preferred": "system\/openmptcprouter",\n\t\t\t"recurse": true/g' "$LUCI_BASE_JSON"
+    echo "[✓] LuCI 后台内部登录重定向已更新"
 fi
 
 # 5. 任何情况都不弹出新版本 available 的更新提示框
@@ -73,7 +83,7 @@ fi
 if [ -d "/tmp/luci-modulecache" ]; then
     rm -rf /tmp/luci-modulecache/* 
 fi
-/etc/init.d/uhttpd restart 2>/dev/null
+# /etc/init.d/uhttpd restart 2>/dev/null
 echo "[✓] 已重启 uhttpd 并清理了 LuCI 缓存"
 
 echo "所有配置和代码修改项已顺利执行完毕！"
