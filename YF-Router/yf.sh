@@ -85,11 +85,25 @@ if [ -f "$HEADER_HTM" ]; then
     echo "[✓] 更新弹窗硬编码限制成功，不再弹出"
 fi
 
+# 6. 浏览器标签页(Title)和图标(Favicon)同步更换为 YF-Router 与 logo.jpg
+if [ -f "$HEADER_HTM" ]; then
+    # 替换Title后缀的 "- LuCI" 为 "- YF-Router"
+    sed -i 's/ - LuCI<\/title>/ - YF-Router<\/title>/g' "$HEADER_HTM"
+    sed -i 's/ - OpenMPTCProuter<\/title>/ - YF-Router<\/title>/g' "$HEADER_HTM"
+    
+    # 替换浏览器小图标和苹果桌面书签图标，指向新的 logo.jpg
+    sed -i 's/favicon\.png/images\/logo\.jpg/g' "$HEADER_HTM"
+    sed -i 's/type="image\/png" href="<%=media%>\/images\/logo\.jpg"/href="<%=media%>\/images\/logo\.jpg"/g' "$HEADER_HTM"
+    sed -i 's/omr-logo-apple\.png/images\/logo\.jpg/g' "$HEADER_HTM"
+    
+    echo "[✓] 浏览器标签页标题及小图标已更新"
+fi
+
 # 清理 LuCI Web 缓存使改动生效
 if [ -d "/tmp/luci-modulecache" ]; then
     rm -rf /tmp/luci-modulecache/* 
 fi
 # /etc/init.d/uhttpd restart 2>/dev/null
-echo "[✓] 已重启 uhttpd 并清理了 LuCI 缓存"
+echo "[✓] 未重启 uhttpd 但已清理了 LuCI 缓存"
 
 echo "所有配置和代码修改项已顺利执行完毕！"
