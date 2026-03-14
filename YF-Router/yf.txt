@@ -1,0 +1,19 @@
+logo图标
+更换为
+本文件夹下的logo.jpg
+logo文本由 OpenMPTCProuter
+更换为
+YF-Router
+
+Powered by openmptcprouter v0.63-6.12 r0+30806-070d8eb4d5
+更换为
+Powered by YF-Router v1.1
+
+登录成功后跳转页
+由
+/cgi-bin/luci/
+更换为
+/cgi-bin/luci/admin/system/openmptcprouter
+
+You have OpenMPTCProuter version 0.60-6.1 and version 0.61-6.1 is now available
+任何情况都不弹出此更新提示框
