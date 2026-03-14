@@ -1,6 +1,6 @@
 logo图标
 更换为
-本文件夹下的logo.jpg
+YF-Router文件夹下的logo.jpg
 logo文本由 OpenMPTCProuter
 更换为
 YF-Router
