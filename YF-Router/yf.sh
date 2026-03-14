@@ -87,9 +87,8 @@ fi
 
 # 6. 浏览器标签页(Title)和图标(Favicon)同步更换为 YF-Router 与 logo.jpg
 if [ -f "$HEADER_HTM" ]; then
-    # 替换Title后缀的 "- LuCI" 为 "- YF-Router"
-    sed -i 's/ - LuCI<\/title>/ - YF-Router<\/title>/g' "$HEADER_HTM"
-    sed -i 's/ - OpenMPTCProuter<\/title>/ - YF-Router<\/title>/g' "$HEADER_HTM"
+    # 直接将整个 <title> 标签内容强制替换为固定只显示 YF-Router
+    sed -i 's|<title>.*</title>|<title>YF-Router</title>|g' "$HEADER_HTM"
     
     # 替换浏览器小图标和苹果桌面书签图标，指向新的 logo.jpg
     sed -i 's/favicon\.png/images\/logo\.jpg/g' "$HEADER_HTM"
