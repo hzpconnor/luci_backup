@@ -1,8 +1,7 @@
-logo图标
+logo图标和文本分别
 更换为
 YF-Router文件夹下的logo.jpg
-logo文本由 OpenMPTCProuter
-更换为
+和
 YF-Router
 
 底部 Powered by openmptcprouter v0.63-6.12 r0+30806-070d8eb4d5

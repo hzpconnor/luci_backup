@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 调用 undo.sh 进行自动备份
-bash "$(dirname "$0")/undo.sh" backup
+# bash "$(dirname "$0")/undo.sh" backup
 
 # 本脚本在openmptcprouter系统根目录下执行
 echo "开始执行系统定制修改..."
@@ -25,21 +25,24 @@ fi
 
 # 1. logo图标更换为本文件夹下的logo.jpg
 LOGO_SRC="$(dirname "$0")/logo.jpg"
-LOGO_DEST="/www/luci-static/openmptcprouter/images/omr-logo.png"
 if [ -f "$LOGO_SRC" ]; then
-    mkdir -p "$(dirname "$LOGO_DEST")"
-    cp -f "$LOGO_SRC" "$LOGO_DEST"
-    echo "[✓] Logo 图片已替换为 ${LOGO_SRC}"
+    # OpenMPTCProuter theme specific resources
+    mkdir -p /www/luci-static/resources/openmptcprouter/images/
+    mkdir -p /www/luci-static/openmptcprouter/images/
+    cp -f "$LOGO_SRC" "/www/luci-static/resources/openmptcprouter/images/logo.jpg"
+    cp -f "$LOGO_SRC" "/www/luci-static/openmptcprouter/images/logo.jpg"
+    echo "[✓] Logo 图片已放入相应目录系统"
 else
     echo "[!] 警告: 找不到 ${LOGO_SRC}，跳过Logo图片更换"
 fi
 
-# 2. logo文本由 OpenMPTCProuter 更换为 YF-Router
+# 2. logo文本由 OpenMPTCProuter 更换为 YF-Router，同时修改图标路径
 HEADER_HTM="/usr/lib/lua/luci/view/themes/openmptcprouter/header.htm"
 if [ -f "$HEADER_HTM" ]; then
     sed -i 's/alt="OpenMPTCProuter"/alt="YF-Router"/g' "$HEADER_HTM"
     sed -i 's/\/> OpenMPTCProuter<\/a>/\/> YF-Router<\/a>/g' "$HEADER_HTM"
-    echo "[✓] Logo 文本已更换为主标题 YF-Router"
+    sed -i 's/omr-logo\.png/logo\.jpg/g' "$HEADER_HTM"
+    echo "[✓] Logo 文本已更换为主标题 YF-Router，并且图标变更为 logo.jpg"
 else
     echo "[!] 警告: 找不到 ${HEADER_HTM}"
 fi
