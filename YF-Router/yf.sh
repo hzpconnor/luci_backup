@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 调用 undo.sh 进行自动备份
+bash "$(dirname "$0")/undo.sh" backup
+
 # 本脚本在openmptcprouter系统根目录下执行
 echo "开始执行系统定制修改..."
 
