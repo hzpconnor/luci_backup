@@ -3,7 +3,7 @@
 # 本脚本用于备份和恢复 YF-Router 修改的系统文件和配置
 # 也可以单独由 yf.sh 调用来进行自动备份
 
-BACKUP_DIR="/root/yf_backup"
+BACKUP_DIR="/yf_backup"
 
 # 需要备份的文件列表
 FILES_TO_BACKUP=(
