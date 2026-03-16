@@ -1,0 +1,25 @@
+{
+    "user_read": {
+        "description": "User Read Access",
+        "read": {
+            "uci": [ "system", "network" ],
+            "ubus": {
+                "system": [ "info", "board" ],
+                "network.device": [ "status" ]
+            }
+        }
+    },
+    "user_write": {
+        "description": "User Write Access",
+        "write": {
+            "uci": [ "network" ]
+        }
+    },
+    
+    "luci-mod-status-index": {
+        "description": "Grant access to Overview page",
+        "read": {
+            "ubus": { "system": ["info"], "network": ["status"] }
+        }
+    }
+}
