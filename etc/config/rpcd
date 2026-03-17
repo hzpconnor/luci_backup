@@ -9,3 +9,8 @@ config login
 	list read '*'
 	list write '*'
 
+config login
+	option username 'user'
+	option password '123456'
+	list read 'user_read'
+	list write 'user_write'
