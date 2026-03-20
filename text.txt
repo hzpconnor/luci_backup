@@ -15,3 +15,5 @@ tar.exe: Error exit delayed from previous errors.
 scp -O -o StrictHostKeyChecking=no d:\test\test7\YF-Router\yf.sh root@192.168.100.1:/YF-Router/yf.sh;
 
 scp -O -o StrictHostKeyChecking=no d:\test\test7\YF-Router\yf.sh root@192.168.100.1:/YF-Router/yf.sh; ssh -o StrictHostKeyChecking=no root@192.168.100.1 "sh /YF-Router/yf.sh"
+
+scp -O -o StrictHostKeyChecking=no -r d:\test\test7\YF-Router\ root@192.168.100.1:/YF-Router/; 
