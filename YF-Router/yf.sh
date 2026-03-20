@@ -51,7 +51,7 @@ fi
 FOOTER_HTM="/usr/lib/lua/luci/view/themes/openmptcprouter/footer.htm"
 if [ -f "$FOOTER_HTM" ]; then
     # 替换源码中带超链接或不带超链接的标识文本及目标网址
-    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by <%= ver.distversion %></a>|<a href="https://yf-router.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_HTM"
+    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by <%= ver.distversion %></a>|<a href="https://yfconf.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_HTM"
     sed -i 's/Powered by <%= ver.distversion %>/Powered by YF-Router v1.1/g' "$FOOTER_HTM"
     echo "[✓] 底部信息及链接已更改为 Powered by YF-Router v1.1"
 else
@@ -96,6 +96,37 @@ if [ -f "$HEADER_HTM" ]; then
     sed -i 's/omr-logo-apple\.png/images\/logo\.jpg/g' "$HEADER_HTM"
     
     echo "[✓] 浏览器标签页标题及小图标已更新"
+fi
+
+# 7. 添加登录页面背景
+LOGIN_BG_SRC="$(dirname "$0")/login_bg.png"
+if [ -f "$LOGIN_BG_SRC" ]; then
+    mkdir -p /www/luci-static/resources/openmptcprouter/images/
+    mkdir -p /www/luci-static/openmptcprouter/images/
+    
+    cp -f "$LOGIN_BG_SRC" "/www/luci-static/resources/openmptcprouter/images/login_bg.png"
+    cp -f "$LOGIN_BG_SRC" "/www/luci-static/openmptcprouter/images/login_bg.png"
+    
+    SYSAUTH_HTM="/usr/lib/lua/luci/view/sysauth.htm"
+    if [ -f "$SYSAUTH_HTM" ]; then
+        if ! grep -q "login_bg\.png" "$SYSAUTH_HTM"; then
+            # 向 login 页面的 head 加入 style
+            sed -i '/<head>/a\\n<style>body { background: url("<%=media%>/images/login_bg.png") no-repeat center center fixed !important; background-size: cover !important; }<\/style>' "$SYSAUTH_HTM"
+        fi
+    fi
+    
+    CASCADE_CSS="/www/luci-static/openmptcprouter/cascade.css"
+    if [ -f "$CASCADE_CSS" ]; then
+        if ! grep -q "login_bg\.png" "$CASCADE_CSS"; then
+            echo "" >> "$CASCADE_CSS"
+            echo "/* 添加登录页背景 */" >> "$CASCADE_CSS"
+            echo "body.logged-in=false, body.logged-out { background: url('images/login_bg.png') no-repeat center center fixed !important; background-size: cover !important; }" >> "$CASCADE_CSS"
+        fi
+    fi
+    
+    echo "[✓] 登录页面背景已设置为 login_bg.png"
+else
+    echo "[!] 警告: 找不到 ${LOGIN_BG_SRC}，跳过登录页面背景设置"
 fi
 
 # 清理 LuCI Web 缓存使改动生效
