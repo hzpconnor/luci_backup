@@ -8,3 +8,10 @@ www/luci-static/bootstrap-light: Can't create '\\\\?\\D:\\test\\test7\\www\\luci
 usr/share/ucode/luci/template/themes/bootstrap-dark: Can't create '\\\\?\\D:\\test\\test7\\usr\\share\\ucode\\luci\\template\\themes\\bootstrap-dark': Invalid argument
 usr/share/ucode/luci/template/themes/bootstrap-light: Can't create '\\\\?\\D:\\test\\test7\\usr\\share\\ucode\\luci\\template\\themes\\bootstrap-light': Invalid argument
 tar.exe: Error exit delayed from previous errors.
+
+
+
+
+scp -O -o StrictHostKeyChecking=no d:\test\test7\YF-Router\yf.sh root@192.168.100.1:/YF-Router/yf.sh;
+
+scp -O -o StrictHostKeyChecking=no d:\test\test7\YF-Router\yf.sh root@192.168.100.1:/YF-Router/yf.sh; ssh -o StrictHostKeyChecking=no root@192.168.100.1 "sh /YF-Router/yf.sh"

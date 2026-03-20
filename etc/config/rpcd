@@ -20,3 +20,5 @@ config login
 	option password '$1$$RmyPVMlhpXjJj8iv4w.Ul.'
 	list read 'user_read'
 	list write 'user_write'
+
+	list read 'luci-base'

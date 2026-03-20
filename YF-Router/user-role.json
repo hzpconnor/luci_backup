@@ -2,17 +2,23 @@
     "user_read": {
         "description": "User Read Access",
         "read": {
-            "uci": [ "system", "network" ],
+            "uci": [ "system", "network", "luci" ],
             "ubus": {
                 "system": [ "info", "board" ],
-                "network.device": [ "status" ]
+                "network.device": [ "status" ],
+                "network": [ "get_proto_handlers" ],
+                "network.interface": [ "dump" ],
+                "luci": [ "getFeatures" ],
+                "luci-rpc": [ "getBoardJSON", "getHostHints", "getNetworkDevices", "getWirelessDevices" ],
+                "file": [ "list" ],
+                "session": [ "access" ]
             }
         }
     },
     "user_write": {
         "description": "User Write Access",
         "write": {
-            "uci": [ "network" ]
+            "uci": [ "network", "luci" ]
         }
     },
     
