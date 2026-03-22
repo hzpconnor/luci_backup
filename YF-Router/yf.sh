@@ -38,25 +38,25 @@ else
 fi
 
 # 2. logo文本由 OpenMPTCProuter 更换为 YF-Router，同时修改图标路径
-HEADER_HTM="/usr/lib/lua/luci/view/themes/openmptcprouter/header.htm"
-if [ -f "$HEADER_HTM" ]; then
-    sed -i 's/alt="OpenMPTCProuter"/alt="YF-Router"/g' "$HEADER_HTM"
-    sed -i 's/\/> OpenMPTCProuter<\/a>/\/> YF-Router<\/a>/g' "$HEADER_HTM"
-    sed -i 's/omr-logo\.png/logo\.jpg/g' "$HEADER_HTM"
+HEADER_UT="/usr/share/ucode/luci/template/themes/openmptcprouter/header.ut"
+if [ -f "$HEADER_UT" ]; then
+    sed -i 's/alt="OpenMPTCProuter"/alt="YF-Router"/g' "$HEADER_UT"
+    sed -i 's/\/> OpenMPTCProuter<\/a>/\/> YF-Router<\/a>/g' "$HEADER_UT"
+    sed -i 's/omr-logo\.png/logo\.jpg/g' "$HEADER_UT"
     echo "[✓] Logo 文本已更换为主标题 YF-Router，并且图标变更为 logo.jpg"
 else
-    echo "[!] 警告: 找不到 ${HEADER_HTM}"
+    echo "[!] 警告: 找不到 ${HEADER_UT}"
 fi
 
 # 3. 底部信息由 Powered by ... 更换为 Powered by YF-Router v1.1
-FOOTER_HTM="/usr/lib/lua/luci/view/themes/openmptcprouter/footer.htm"
-if [ -f "$FOOTER_HTM" ]; then
+FOOTER_UT="/usr/share/ucode/luci/template/themes/openmptcprouter/footer.ut"
+if [ -f "$FOOTER_UT" ]; then
     # 替换源码中带超链接或不带超链接的标识文本及目标网址
-    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by <%= ver.distversion %></a>|<a href="https://yfconf.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_HTM"
-    sed -i 's/Powered by <%= ver.distversion %>/Powered by YF-Router v1.1/g' "$FOOTER_HTM"
+    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by {{ ver.distversion }}</a>|<a href="https://yfconf.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_UT"
+    sed -i 's/Powered by {{ ver.distversion }}/Powered by YF-Router v1.1/g' "$FOOTER_UT"
     echo "[✓] 底部信息及链接已更改为 Powered by YF-Router v1.1"
 else
-    echo "[!] 警告: 找不到 ${FOOTER_HTM}"
+    echo "[!] 警告: 找不到 ${FOOTER_UT}"
 fi
 
 # 4. 登录成功后跳转页改到 OpenMPTCProuter 或系统自定页面
@@ -87,21 +87,21 @@ if [ -f "$MENU_JSON" ]; then
 fi
 
 # 5. 任何情况都不弹出新版本 available 的更新提示框
-if [ -f "$HEADER_HTM" ]; then
+if [ -f "$HEADER_UT" ]; then
     # 直接在模板逻辑里把 "A < B" 的新旧版本判断条件替换回 false，则始终不进入弹窗渲染循环
-    sed -i 's/current_omr_version < latest_omr_version then/false then/g' "$HEADER_HTM"
+    sed -i 's/current_omr_version < latest_omr_version/false/g' "$HEADER_UT"
     echo "[✓] 更新弹窗硬编码限制成功，不再弹出"
 fi
 
 # 6. 浏览器标签页(Title)和图标(Favicon)同步更换为 YF-Router 与 logo.jpg
-if [ -f "$HEADER_HTM" ]; then
+if [ -f "$HEADER_UT" ]; then
     # 直接将整个 <title> 标签内容强制替换为固定只显示 YF-Router
-    sed -i 's|<title>.*</title>|<title>YF-Router</title>|g' "$HEADER_HTM"
+    sed -i 's|<title>.*</title>|<title>YF-Router</title>|g' "$HEADER_UT"
     
     # 替换浏览器小图标和苹果桌面书签图标，指向新的 logo.jpg
-    sed -i 's/favicon\.png/images\/logo\.jpg/g' "$HEADER_HTM"
-    sed -i 's/type="image\/png" href="<%=media%>\/images\/logo\.jpg"/href="<%=media%>\/images\/logo\.jpg"/g' "$HEADER_HTM"
-    sed -i 's/omr-logo-apple\.png/images\/logo\.jpg/g' "$HEADER_HTM"
+    sed -i 's/favicon\.png/images\/logo\.jpg/g' "$HEADER_UT"
+    sed -i 's/href="{{ media }}\/images\/logo\.jpg"/href="{{ media }}\/images\/logo\.jpg"/g' "$HEADER_UT"
+    sed -i 's/omr-logo-apple\.png/images\/logo\.jpg/g' "$HEADER_UT"
     
     echo "[✓] 浏览器标签页标题及小图标已更新"
 fi
@@ -115,11 +115,10 @@ if [ -f "$LOGIN_BG_SRC" ]; then
     cp -f "$LOGIN_BG_SRC" "/www/luci-static/resources/openmptcprouter/images/login_bg.png"
     cp -f "$LOGIN_BG_SRC" "/www/luci-static/openmptcprouter/images/login_bg.png"
     
-    SYSAUTH_HTM="/usr/lib/lua/luci/view/sysauth.htm"
-    if [ -f "$SYSAUTH_HTM" ]; then
-        if ! grep -q "login_bg\.png" "$SYSAUTH_HTM"; then
-            # 向 login 页面的 head 加入 style
-            sed -i '/<head>/a\\n<style>body { background: url("<%=media%>/images/login_bg.png") no-repeat center center fixed !important; background-size: cover !important; }<\/style>' "$SYSAUTH_HTM"
+    SYSAUTH_UT="/usr/share/ucode/luci/template/sysauth.ut"
+    if [ -f "$SYSAUTH_UT" ]; then
+        if ! grep -q "login_bg\.png" "$SYSAUTH_UT"; then
+            sed -i '/{% include('\''header'\'') %}/a\\n<style>body { background: url("{{ media }}/images/login_bg.png") no-repeat center center fixed !important; background-size: cover !important; }<\/style>' "$SYSAUTH_UT"
         fi
     fi
     
@@ -128,7 +127,7 @@ if [ -f "$LOGIN_BG_SRC" ]; then
         if ! grep -q "login_bg\.png" "$CASCADE_CSS"; then
             echo "" >> "$CASCADE_CSS"
             echo "/* 添加登录页背景 */" >> "$CASCADE_CSS"
-            echo "body.logged-in=false, body.logged-out { background: url('images/login_bg.png') no-repeat center center fixed !important; background-size: cover !important; }" >> "$CASCADE_CSS"
+            echo "body.sysauth, body[data-page=\"sysauth\"] { background: url('images/login_bg.png') no-repeat center center fixed !important; background-size: cover !important; }" >> "$CASCADE_CSS"
         fi
     fi
     
