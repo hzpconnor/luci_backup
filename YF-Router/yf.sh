@@ -70,16 +70,24 @@ else
 fi
 
 # 另外，要改变LuCI框架内登录(sysauth)成功后的默认跳转逻辑：
-# LuCI 通过判断节点 order 权重决定首选页面，由于 system 默认 order 为 20 ，而 status 为 10
-# 我们给 admin/status 增加 order 的值，使得 admin/system 自动成为首选跳转目标
+# LuCI 通过判断节点 order 权重决定首选页面，由于 system 默认 order 为 20 ，而 status 为 10，dashboard 为 5
+# 我们给 admin/dashboard 和 admin/status 增加 order 的值，使得 admin/system 自动成为首选跳转目标
 LUCI_BASE_JSON="/usr/share/luci/menu.d/luci-base.json"
+LUCI_DASHBOARD_JSON="/usr/share/luci/menu.d/luci-mod-dashboard.json"
+
 if [ -f "$LUCI_BASE_JSON" ]; then
-    # 将 admin/status 的 order 10 改为 30, 使得 admin/system (order 20) 成为首选项
+    # 将 admin/status 的 order 10 改为 30, 使得 admin/system (order 20) 成为靠前项
     sed -i '/"admin\/status": {/,/"order":/ s/"order": [0-9]*/"order": 30/' "$LUCI_BASE_JSON"
-    # 清理 LuCI index 缓存，强制重新计算菜单和路由跳转逻辑
-    rm -f /tmp/luci-indexcache*
-    echo "[✓] LuCI 后台内部登录重定向(Order权重)已更新"
 fi
+
+if [ -f "$LUCI_DASHBOARD_JSON" ]; then
+    # 将 dashboard 的 order 5 改为 40
+    sed -i 's/"order": 5/"order": 40/g' "$LUCI_DASHBOARD_JSON"
+fi
+
+# 清理 LuCI index 缓存，强制重新计算菜单和路由跳转逻辑
+rm -f /tmp/luci-indexcache*
+echo "[✓] LuCI 后台内部登录重定向(Order权重)已更新"
 
 # 另外修改系统主菜单显示名称为 YF-Router，避免修改 UCI 导致控制器路径漂移
 MENU_JSON="/usr/share/luci/menu.d/luci-app-openmptcprouter.json"
