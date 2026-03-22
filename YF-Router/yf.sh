@@ -13,7 +13,8 @@ if command -v uci >/dev/null 2>&1; then
     
     # 更改 OpenMPTCProuter 在 LuCI 菜单中的显示文本
     # 注意：部分前端可能直接取此项渲染
-    uci set openmptcprouter.settings.menu='YF-Router' 2>/dev/null
+    # 不要通过 uci 修改，否则会导致 controller 注册二级菜单路径改变，引起 /admin/system/openmptcprouter 菜单丢失
+    # uci set openmptcprouter.settings.menu='YF-Router' 2>/dev/null
     
     # 如果有对应的版本显示，可以直接修改最新版本信息防止检测到新版
     # 将目前系统的检查记录给清空或设为极大值，能有效降低弹窗几率
@@ -76,6 +77,13 @@ if [ -f "$LUCI_BASE_JSON" ]; then
     # 由于是JSON格式，匹配 action 里的 recurse 并在上方插入 preferred 选项。
     sed -i 's/"recurse": true/"preferred": "system\/openmptcprouter",\n\t\t\t"recurse": true/g' "$LUCI_BASE_JSON"
     echo "[✓] LuCI 后台内部登录重定向已更新"
+fi
+
+# 另外修改系统主菜单显示名称为 YF-Router，避免修改 UCI 导致控制器路径漂移
+MENU_JSON="/usr/share/luci/menu.d/luci-app-openmptcprouter.json"
+if [ -f "$MENU_JSON" ]; then
+    sed -i 's/"title": "OpenMPTCProuter"/"title": "YF-Router"/g' "$MENU_JSON"
+    echo "[✓] 左侧系统主菜单名称已更改为 YF-Router"
 fi
 
 # 5. 任何情况都不弹出新版本 available 的更新提示框
