@@ -38,7 +38,7 @@ else
 fi
 
 # 2. logo文本由 OpenMPTCProuter 更换为 YF-Router，同时修改图标路径
-HEADER_UT="/usr/share/ucode/luci/template/themes/openmptcprouter/header.ut"
+HEADER_UT="/usr/lib/lua/luci/view/themes/openmptcprouter/header.htm"
 if [ -f "$HEADER_UT" ]; then
     sed -i 's/alt="OpenMPTCProuter"/alt="YF-Router"/g' "$HEADER_UT"
     sed -i 's/\/> OpenMPTCProuter<\/a>/\/> YF-Router<\/a>/g' "$HEADER_UT"
@@ -49,11 +49,11 @@ else
 fi
 
 # 3. 底部信息由 Powered by ... 更换为 Powered by YF-Router v1.1
-FOOTER_UT="/usr/share/ucode/luci/template/themes/openmptcprouter/footer.ut"
+FOOTER_UT="/usr/lib/lua/luci/view/themes/openmptcprouter/footer.htm"
 if [ -f "$FOOTER_UT" ]; then
     # 替换源码中带超链接或不带超链接的标识文本及目标网址
-    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by {{ ver.distversion }}</a>|<a href="https://yfconf.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_UT"
-    sed -i 's/Powered by {{ ver.distversion }}/Powered by YF-Router v1.1/g' "$FOOTER_UT"
+    sed -i 's|<a href="https://github.com/ysurac/openmptcprouter">Powered by <%= ver.distversion %></a>|<a href="https://yfconf.com">Powered by YF-Router v1.1</a>|g' "$FOOTER_UT"
+    sed -i 's/Powered by <%= ver.distversion %>/Powered by YF-Router v1.1/g' "$FOOTER_UT"
     echo "[✓] 底部信息及链接已更改为 Powered by YF-Router v1.1"
 else
     echo "[!] 警告: 找不到 ${FOOTER_UT}"
