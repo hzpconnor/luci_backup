@@ -101,10 +101,10 @@ OMPR_CTRL="/usr/lib/lua/luci/controller/openmptcprouter.lua"
 if [ -f "$OMPR_CTRL" ]; then
     # 根节点默认跳转目标由 wizard 改为 status
     sed -i 's/alias("admin", "system", menuentry:lower(), "wizard")/alias("admin", "system", menuentry:lower(), "status")/' "$OMPR_CTRL"
-    # status order 2 → 1
-    sed -i 's/template("openmptcprouter\/wanstatus"), _("Status"), 2/template("openmptcprouter\/wanstatus"), _("Status"), 1/' "$OMPR_CTRL"
-    # wizard order 1 → 2
-    sed -i 's/template("openmptcprouter\/wizard"), _("Settings Wizard"), 1/template("openmptcprouter\/wizard"), _("Settings Wizard"), 2/' "$OMPR_CTRL"
+    # # status order 2 → 1
+    # sed -i 's/template("openmptcprouter\/wanstatus"), _("Status"), 2/template("openmptcprouter\/wanstatus"), _("Status"), 1/' "$OMPR_CTRL"
+    # # wizard order 1 → 2
+    # sed -i 's/template("openmptcprouter\/wizard"), _("Settings Wizard"), 1/template("openmptcprouter\/wizard"), _("Settings Wizard"), 2/' "$OMPR_CTRL"
     echo "[✓] OpenMPTCProuter 子菜单 Status 已调整为首位"
 else
     echo "[!] 警告: 找不到 ${OMPR_CTRL}，跳过子菜单排序调整"
