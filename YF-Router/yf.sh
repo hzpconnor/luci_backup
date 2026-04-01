@@ -59,7 +59,7 @@ else
     echo "[!] 警告: 找不到 ${FOOTER_UT}"
 fi
 
-# 4. 登录成功后跳转页改到 OpenMPTCProuter 或系统自定页面
+# 4. 登录成功后跳转页改到 /cgi-bin/luci/admin/system/openmptcprouter/status
 INDEX_HTML="/www/index.html"
 if [ -f "$INDEX_HTML" ]; then
     sed -i 's|URL=cgi-bin/luci/|URL=/cgi-bin/luci/admin/system/openmptcprouter|g' "$INDEX_HTML"
@@ -94,6 +94,20 @@ MENU_JSON="/usr/share/luci/menu.d/luci-app-openmptcprouter.json"
 if [ -f "$MENU_JSON" ]; then
     sed -i 's/"title": "OpenMPTCProuter"/"title": "YF-Router"/g' "$MENU_JSON"
     echo "[✓] 左侧系统主菜单名称已更改为 YF-Router"
+fi
+
+# 将 OpenMPTCProuter 控制器子菜单中 status 调整为第一项，wizard 降为第二项
+OMPR_CTRL="/usr/lib/lua/luci/controller/openmptcprouter.lua"
+if [ -f "$OMPR_CTRL" ]; then
+    # 根节点默认跳转目标由 wizard 改为 status
+    sed -i 's/alias("admin", "system", menuentry:lower(), "wizard")/alias("admin", "system", menuentry:lower(), "status")/' "$OMPR_CTRL"
+    # status order 2 → 1
+    sed -i 's/template("openmptcprouter\/wanstatus"), _("Status"), 2/template("openmptcprouter\/wanstatus"), _("Status"), 1/' "$OMPR_CTRL"
+    # wizard order 1 → 2
+    sed -i 's/template("openmptcprouter\/wizard"), _("Settings Wizard"), 1/template("openmptcprouter\/wizard"), _("Settings Wizard"), 2/' "$OMPR_CTRL"
+    echo "[✓] OpenMPTCProuter 子菜单 Status 已调整为首位"
+else
+    echo "[!] 警告: 找不到 ${OMPR_CTRL}，跳过子菜单排序调整"
 fi
 
 # 5. 任何情况都不弹出新版本 available 的更新提示框
