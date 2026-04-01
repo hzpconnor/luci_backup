@@ -7,11 +7,19 @@ BACKUP_DIR="/yf_backup"
 
 # 需要备份的文件列表
 FILES_TO_BACKUP=(
-    "/www/luci-static/openmptcprouter/images/omr-logo.png"
+    "/www/luci-static/resources/openmptcprouter/images/logo.jpg"
+    "/www/luci-static/openmptcprouter/images/logo.jpg"
+    "/www/luci-static/resources/openmptcprouter/images/login_bg.png"
+    "/www/luci-static/openmptcprouter/images/login_bg.png"
     "/usr/lib/lua/luci/view/themes/openmptcprouter/header.htm"
     "/usr/lib/lua/luci/view/themes/openmptcprouter/footer.htm"
     "/www/index.html"
     "/usr/share/luci/menu.d/luci-base.json"
+    "/usr/share/luci/menu.d/luci-mod-dashboard.json"
+    "/usr/share/luci/menu.d/luci-app-openmptcprouter.json"
+    "/usr/lib/lua/luci/controller/openmptcprouter.lua"
+    "/usr/share/ucode/luci/template/sysauth.ut"
+    "/www/luci-static/openmptcprouter/cascade.css"
 )
 
 backup() {
